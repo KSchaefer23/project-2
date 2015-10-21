@@ -14,7 +14,7 @@ float redX,  redY,  redDX,  redDY;
 float yelX,  yelY,  yelDX,  yelDY;
 float bluX, bluY, bluDX, bluDY;
 
-float buttonX=380, buttonY=15, buttonW=150, buttonH=40;
+float buttonX=380, buttonY=15, buttonW=160, buttonH=40;
 
 //// SETUP:  size and table
 void setup() {
@@ -154,8 +154,11 @@ void collisions() {
 //// Display balls & strings
 void show() {
   fill( 255,0,0 );    ellipse( redX,redY, 30,30 );
+  fill(255,255,255);  text( '1', redX, redY);
   fill( 255,255,0 );  ellipse( yelX,yelY, 30,30 );
+  fill(0,0,0);  text( '2', yelX, yelY);  
   fill( 0,0,255 );    ellipse( bluX,bluY, 30,30 );
+  fill(255,255,255);  text( '3', bluX, bluY);  
   fill( 255,255,255 );    ellipse( cueX,cueY, 30,30 );
 }
 void messages() {
