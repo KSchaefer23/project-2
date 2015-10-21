@@ -63,7 +63,7 @@ void draw() {
 //// Create button
 void showButton( float x, float y, float w, float h ) {
   fill(255,175,0);
-  rect ( x,y,w,h );
+  rect ( x,y,w,h, 7 );
 }
 
 //// Draw table
