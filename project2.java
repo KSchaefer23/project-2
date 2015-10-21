@@ -39,9 +39,9 @@ void setup() {
    bluX=  random( middle,right );   bluY=  random( top, bottom );   
    
    // Random speeds
-   redDX=  random( 1,3 );   redDY=  random( -3,3 );
-   yelDX=  random( 1,3 );   yelDY=  random( -3,3 );
-   bluDX=  random( 1,3 );   bluDY=  random( -3,3 );
+   redDX=  random( 1,6 );   redDY=  random( -3,3 );
+   yelDX=  random( 1,6 );   yelDY=  random( -3,3 );
+   bluDX=  random( 1,6 );   bluDY=  random( -3,3 );
    
  }
 
@@ -98,8 +98,8 @@ void bounce() {
     //if (cueX>right) { cueX = right-15; cueDX= -abs(cueDX); }
     //if (cueY<top) { cueY = top+15; cueDY= +abs(cueDY); }
     //if (cueY<bottom) { cueY = bottom-15; cueDY= -abs(cueDY); }
-  cueX += cueDX;  if ( cueX<left || cueX>right ) cueDX *= -1;
-  cueY += cueDY;  if ( cueY<top || cueY>bottom ) cueDY *=  -1;    
+  //cueX += cueDX;  if ( cueX<left || cueX>right ) cueDX *= -1;
+  //cueY += cueDY;  if ( cueY<top || cueY>bottom ) cueDY *=  -1;    
 }
 
 //// Button click function & cue draw/movement
@@ -113,8 +113,8 @@ void mouseClicked() {
   else {
   cueDX= (cueX - mouseX) / 10;
   cueDY= (cueY - mouseY) / 10;
-  strokeWeight( dist(mouseX,mouseY, cueX,cueY) / 30);
-  line(mouseX,mouseY, cueX,cueY);
+  //strokeWeight( dist(mouseX,mouseY, cueX,cueY) / 30);
+  //line(mouseX,mouseY, cueX,cueY);
   }
 }
 
@@ -122,7 +122,7 @@ void mouseClicked() {
 void collisions() {
   float tmp;
   // Swap velocities!
-  if (cueDX != 0) {
+  //if (cueDX != 0) {
     if ( dist( redX,redY, yelX,yelY ) < 30 ) {
       tmp=yelDX;  yelDX=redDX;  redDX=tmp;
       tmp=yelDY;  yelDY=redDY;  redDY=tmp;
@@ -136,30 +136,29 @@ void collisions() {
       tmp=bluDY;  bluDY=yelDY;  yelDY=tmp;
     }
     
-    if ( dist( cueX,cueY, bluX,bluY ) < 30 ){ 
-      tmp=bluDX;  bluDX=cueDX;  cueDX=tmp;
-      tmp=bluDY;  bluDY=cueDY;  cueDY=tmp;
-    }
-    if ( dist( cueX,cueY, redX,redY ) < 30 ){ 
-      tmp=redDX;  redDX=cueDX;  cueDX=tmp;
-      tmp=redDY;  redDY=cueDY;  cueDY=tmp;
-    }
-    if ( dist( cueX,cueY, yelX,yelY ) < 30 ){ 
-      tmp=yelDX;  yelDX=cueDX;  cueDX=tmp;
-      tmp=yelDY;  yelDY=cueDY;  cueDY=tmp;
-    }  
+    //if ( dist( cueX,cueY, bluX,bluY ) < 30 ){ 
+      //tmp=bluDX;  bluDX=cueDX;  cueDX=tmp;
+      //tmp=bluDY;  bluDY=cueDY;  cueDY=tmp;
+    //}
+    //if ( dist( cueX,cueY, redX,redY ) < 30 ){ 
+      //tmp=redDX;  redDX=cueDX;  cueDX=tmp;
+      //tmp=redDY;  redDY=cueDY;  cueDY=tmp;
+    //}
+    //if ( dist( cueX,cueY, yelX,yelY ) < 30 ){ 
+      //tmp=yelDX;  yelDX=cueDX;  cueDX=tmp;
+      //tmp=yelDY;  yelDY=cueDY;  cueDY=tmp;
+    //}  
   }
-}
 
 //// Display balls & strings
 void show() {
   fill( 255,0,0 );    ellipse( redX,redY, 30,30 );
-  fill(255,255,255);  text( '1', redX, redY);
+  fill(255,255,255);  text( '1', redX-3, redY+3);
   fill( 255,255,0 );  ellipse( yelX,yelY, 30,30 );
-  fill(0,0,0);  text( '2', yelX, yelY);  
+  fill(0,0,0);  text( '2', yelX-3, yelY+3);  
   fill( 0,0,255 );    ellipse( bluX,bluY, 30,30 );
-  fill(255,255,255);  text( '3', bluX, bluY);  
-  fill( 255,255,255 );    ellipse( cueX,cueY, 30,30 );
+  fill(255,255,255);  text( '3', bluX-3, bluY+3);  
+  //fill( 255,255,255 );    ellipse( cueX,cueY, 30,30 );
 }
 void messages() {
   fill(0);
