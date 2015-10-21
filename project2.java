@@ -1,11 +1,8 @@
 //// Kevin Schaefer CST 112
-//// X5:  collisions.
-//// (Assume ball diameter of 30.)
+//// Project 2
 
-//// GLOBALS:  pool table, 3 colored balls
-
-String title=  "ELASTIC COLLISIONS";
-String news=   "Use 'r' key to reset.";
+String title=  "PROJECT TWO";
+String news=   "Use 'r' key or click button to reset.";
 String author=  "Kevin Schaefer";
 
 
@@ -17,6 +14,8 @@ float redX,  redY,  redDX,  redDY;
 float yelX,  yelY,  yelDX,  yelDY;
 float bluX, bluY, bluDX, bluDY;
 
+float buttonX=380, buttonY=15, buttonW=150, buttonH=40;
+
 //// SETUP:  size and table
 void setup() {
   size( 600, 400 );
@@ -25,9 +24,9 @@ void setup() {
   top=    100;
   bottom= height-50;
   middle= left + (right-left) / 2;
-  //
   reset();
  }
+ 
  void reset() {
    cueX=  left + (right-left) / 4;
    cueY=  top + (bottom-top) / 2;
@@ -39,15 +38,6 @@ void setup() {
    yelX=  random( middle,right );   yelY=  random( top, bottom );
    bluX=  random( middle,right );   bluY=  random( top, bottom );   
    
-   /// Rough Triangle Formation -- Uncomment this section & comment out 
-   /// "Random Positions" and "Random Speeds" for different game style
-   /// redX=  middle+100;   redY= cueY;
-   /// yelX=  middle+129;   yelY= cueY+16;
-   /// bluX=  middle+129;   bluY= cueY-16;
-   /// redDX= 0; redDY= 0;
-   /// yelDX= 0; yelDY= 0;
-   /// bluDX= 0; bluDY= 0;
-   
    // Random speeds
    redDX=  random( 1,3 );   redDY=  random( -3,3 );
    yelDX=  random( 1,3 );   yelDY=  random( -3,3 );
@@ -55,7 +45,7 @@ void setup() {
    
  }
 
-//// NEXT FRAME:  table, bounce off walls, collisions, show all
+//// Table, collisions, reset button
 void draw() {
   background( 250,250,200 );
   rectMode( CORNERS );
@@ -64,11 +54,21 @@ void draw() {
   collisions();
   show();
   messages();
+  rectMode( CORNER );
+  showButton( buttonX, buttonY, buttonW, buttonH );  
+  fill(255,255,255);
+  text( "CLICK HERE TO RESET", buttonX+buttonW/12, buttonY+buttonH*5/8 );
 }
 
-//// SCENE:  draw the table with walls
+//// Create button
+void showButton( float x, float y, float w, float h ) {
+  fill(255,175,0);
+  rect ( x,y,w,h );
+}
+
+//// Draw table
 void table( float left, float top, float right, float bottom ) {
-  fill( 100, 250, 100 );    // green pool table
+  fill( 100, 250, 100 );    // Green table
   strokeWeight(20);
   stroke( 127, 0, 0 );      // Brown walls
   rect( left-20, top-20, right+20, bottom+20 );
@@ -76,8 +76,9 @@ void table( float left, float top, float right, float bottom ) {
   strokeWeight(1);
 }
 
-//// ACTION:  bounce off walls, collisions
+//// Bounce & Collisions
 void bounce() {
+  //// BELOW COMMENTED OUT SECTIONS ARE NOTES FROM CLASS, NOT YET IMPLEMENTED
   //if ( redX<left ) {
   //  redX= left+15;
   //  redDX= +abs(redDX);
@@ -101,14 +102,23 @@ void bounce() {
   cueY += cueDY;  if ( cueY<top || cueY>bottom ) cueDY *=  -1;    
 }
 
+//// Button click function & cue draw/movement
 void mouseClicked() {
+  if ((mouseX) > (buttonX) &&  
+     (mouseX) < (buttonX+buttonW) &&
+     (mouseY) > (buttonY) &&
+     (mouseY) < (buttonY+buttonH)) {
+       reset();
+     }
+  else {
   cueDX= (cueX - mouseX) / 10;
   cueDY= (cueY - mouseY) / 10;
   strokeWeight( dist(mouseX,mouseY, cueX,cueY) / 30);
   line(mouseX,mouseY, cueX,cueY);
-  
+  }
 }
 
+//// Swaps velocities when ball collide
 void collisions() {
   float tmp;
   // Swap velocities!
@@ -141,7 +151,7 @@ void collisions() {
   }
 }
 
-//// SHOW:  balls, messages
+//// Display balls & strings
 void show() {
   fill( 255,0,0 );    ellipse( redX,redY, 30,30 );
   fill( 255,255,0 );  ellipse( yelX,yelY, 30,30 );
@@ -150,13 +160,13 @@ void show() {
 }
 void messages() {
   fill(0);
-  text( title, width/3, 20 );
-  text( news, width/3, 40 );
+  text( title, width/8, 30 );
+  text( news, width/8, 50 );
   text( author, 10, height-6 );
 }
 
 
-//// HANDLERS:  keys, click
+//// Resets when key pressed
 void keyPressed() {
   if (key == 'r') {
     reset();
